@@ -1,11 +1,10 @@
 from typing import Iterable, Iterator
-
 import ll
 
 
 class LinkedList:
 
-    def __init__(self, xs: Iterable = ...):
+    def __init__(self, *xs: Iterable):
 
         def make_list(it: Iterator):
             try:
@@ -14,7 +13,7 @@ class LinkedList:
             except StopIteration:
                 return ()
 
-        self._head = make_list(iter(xs)) if xs is not ... else ()
+        self._head = make_list(iter(xs))
 
     def __repr__(self):
         return '(' + ' '.join(map(str, self)) + ')'
