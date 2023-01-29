@@ -13,7 +13,11 @@ class LinkedList:
             except StopIteration:
                 return ()
 
-        self._head = make_list(iter(xs))
+        match xs:
+            case (ys, ) | (*ys, ):
+                self._head = make_list(iter(ys))
+            case _:
+                raise TypeError(f'Expected an iterable but got {xs}.')
 
     def __str__(self):
         return ' -> '.join(map(str, self))
@@ -23,12 +27,13 @@ class LinkedList:
 
     def __add__(self, other):
 
-        if isinstance(other, LinkedList):
-            result = LinkedList()
-            result._head = ll.concat(self._head, other._head)
-            return result
-        else:
-            raise TypeError(f'Expected a LinkedList but got {other}.')
+        match other:
+            case LinkedList(_head=head):
+                result = LinkedList()
+                result._head = ll.concat(self._head, head)
+                return result
+            case _:
+                raise TypeError(f'Expected a LinkedList but got {other}.')
 
     def __reversed__(self):
         xs = LinkedList()
@@ -58,5 +63,5 @@ if __name__ == '__main__':
     xs = LinkedList([1, 2, 3])
     ys = LinkedList([4, 5, 6])
     print(reversed(xs + ys))
-    zs = LinkedList([5, 2, 3, 4, 6, 1])
+    zs = LinkedList(5, 2, 3, 4, 6, 1)
     print(zs.sorted())
