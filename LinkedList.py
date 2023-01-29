@@ -15,8 +15,8 @@ class LinkedList:
 
         self._head = make_list(iter(xs))
 
-    def __repr__(self):
-        return '(' + ' '.join(map(str, self)) + ')'
+    def __str__(self):
+        return ' -> '.join(map(str, self))
 
     def __iter__(self):
         return LinkedListIterator(self._head)
